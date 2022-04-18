@@ -3,6 +3,8 @@ const Manager = require("../lib/manager.js");
 const Engineer = require("../lib/engineer.js");
 const Intern = require("../lib/intern.js");
 
+let teamArray = [];
+
 function promptTeamManager() {
   return inquirer
     .prompt([
@@ -78,13 +80,14 @@ function promptTeamManager() {
     .then((anwsers) => {
       managerOne = new Manager(anwsers);
       console.log(managerOne);
+      teamArray.push(managerOne);
       if (anwsers.employee === "engineer") {
         promptEngineer();
       } else if (anwsers.employee === "intern") {
         promptIntern();
       } else return anwsers;
     })
-    .then((engineerInfo, internInfo) => {})
+    .then(() => {})
     .catch((error) => {});
 }
 
@@ -93,7 +96,7 @@ function promptEngineer() {
     .prompt([
       {
         type: "input",
-        name: "engineerName",
+        name: "name",
         message: "What is the engineers name?",
         validate: (engineerName) => {
           if (engineerName) {
@@ -106,7 +109,7 @@ function promptEngineer() {
       },
       {
         type: "input",
-        name: "engineerID",
+        name: "id",
         message: "What is the engineers ID?",
         validate: (engineerID) => {
           if (engineerID && !isNaN(engineerID)) {
@@ -118,7 +121,7 @@ function promptEngineer() {
       },
       {
         type: "input",
-        name: "engineerEmail",
+        name: "email",
         message: "What is the engineers email?",
         validate: (engineerEmail) => {
           if (engineerEmail) {
@@ -162,6 +165,7 @@ function promptEngineer() {
     .then((anwsers) => {
       engineerOne = new Engineer(anwsers);
       console.log(engineerOne);
+      teamArray.push(engineerOne);
       if (anwsers.employee === "engineer") {
         promptEngineer();
       } else if (anwsers.employee === "intern") {
@@ -176,7 +180,7 @@ function promptIntern() {
     .prompt([
       {
         type: "input",
-        name: "internName",
+        name: "name",
         message: "What is the interns name?",
         validate: (engineerName) => {
           if (engineerName) {
@@ -189,7 +193,7 @@ function promptIntern() {
       },
       {
         type: "input",
-        name: "internID",
+        name: "id",
         message: "What is the interns ID?",
         validate: (engineerID) => {
           if (engineerID && !isNaN(engineerID)) {
@@ -201,7 +205,7 @@ function promptIntern() {
       },
       {
         type: "input",
-        name: "internEmail",
+        name: "email",
         message: "What is the interns email?",
         validate: (engineerEmail) => {
           if (engineerEmail) {
@@ -245,6 +249,7 @@ function promptIntern() {
     .then((anwsers) => {
       internOne = new Intern(anwsers);
       console.log(internOne);
+      teamArray.push(internOne);
       if (anwsers.employee === "engineer") {
         promptEngineer();
       } else if (anwsers.employee === "intern") {

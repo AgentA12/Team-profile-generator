@@ -1,4 +1,5 @@
-`<!DOCTYPE html>
+function generateHTML(data) {
+  return `<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -8,7 +9,12 @@
     <title>The Team</title>
   </head>
   <body>
-  
+  <div class="head">
+  <h1>My Team<h1/>
+  <div/>
   </body>
 </html>
 `;
+}
+
+module.exports = generateHTML;
