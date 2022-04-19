@@ -2,8 +2,7 @@ const inquirer = require("inquirer");
 const Manager = require("../lib/manager.js");
 const Engineer = require("../lib/engineer.js");
 const Intern = require("../lib/intern.js");
-
-let teamArray = [];
+const generateHTML = require("../src/generateHTML.js");
 
 function promptTeamManager() {
   return inquirer
@@ -61,34 +60,71 @@ function promptTeamManager() {
         },
       },
       {
+        type: "list",
+        name: "employee",
+        message: "Choice a employee to add",
+        choices: ["engineer", "intern"],
+      },
+    ])
+    .then((anwsers) => {
+      getTeam(anwsers);
+    })
+    .catch((error) => {});
+}
+
+function getTeam(managerObject) {
+  let teamArray = [];
+  let manager = new Manager(managerObject);
+  teamArray.push(manager);
+  if (managerObject.employee === "engineer") {
+    promptEngineer().then((resp) => {
+      teamArray.push(resp);
+      getAnswers(teamArray);
+    });
+  } else
+    promptIntern().then((resp) => {
+      teamArray.push(resp);
+      getAnswers(teamArray);
+    });
+}
+
+function getAnswers(ary) {
+  inquirer
+    .prompt([
+      {
         type: "confirm",
-        name: "confirmAddEmployee",
-        message: "Would you like to add an employee?",
+        name: "confirmEmployee",
+        message: "would you like to add another employee?",
       },
       {
         type: "list",
         name: "employee",
-        message: "Choice a employee title",
+        message: "Choice a employee to add",
         choices: ["engineer", "intern"],
-        when: ({ confirmAddEmployee }) => {
-          if (confirmAddEmployee) {
+        when: ({ confirmEmployee }) => {
+          if (confirmEmployee) {
             return true;
           } else return false;
         },
       },
     ])
-    .then((anwsers) => {
-      managerOne = new Manager(anwsers);
-      console.log(managerOne);
-      teamArray.push(managerOne);
-      if (anwsers.employee === "engineer") {
-        promptEngineer();
-      } else if (anwsers.employee === "intern") {
-        promptIntern();
-      } else return anwsers;
-    })
-    .then(() => {})
-    .catch((error) => {});
+    .then((resp) => {
+      if (resp.confirmEmployee === true) {
+        if (resp.employee === "engineer") {
+          promptEngineer().then((anwsers) => {
+            ary.push(anwsers);
+            getAnswers(ary);
+          });
+        } else if (resp.employee === "intern") {
+          promptIntern().then((anwsers) => {
+            ary.push(anwsers);
+            getAnswers(ary);
+          });
+        }
+      } else {
+        generateHTML(ary);
+      }
+    });
 }
 
 function promptEngineer() {
@@ -145,32 +181,10 @@ function promptEngineer() {
           }
         },
       },
-      {
-        type: "confirm",
-        name: "confirmAddEmployee",
-        message: "Would you like to add another employee?",
-      },
-      {
-        type: "list",
-        name: "employee",
-        message: "Choice a employee title",
-        choices: ["engineer", "intern"],
-        when: ({ confirmAddEmployee }) => {
-          if (confirmAddEmployee) {
-            return true;
-          } else return false;
-        },
-      },
     ])
     .then((anwsers) => {
-      engineerOne = new Engineer(anwsers);
-      console.log(engineerOne);
-      teamArray.push(engineerOne);
-      if (anwsers.employee === "engineer") {
-        promptEngineer();
-      } else if (anwsers.employee === "intern") {
-        promptIntern();
-      } else return anwsers;
+      let engineer = new Engineer(anwsers);
+      return engineer;
     })
     .catch((err) => {});
 }
@@ -229,32 +243,10 @@ function promptIntern() {
           }
         },
       },
-      {
-        type: "confirm",
-        name: "confirmAddEmployee",
-        message: "Would you like to add another employee?",
-      },
-      {
-        type: "list",
-        name: "employee",
-        message: "Choice a employee title",
-        choices: ["engineer", "intern"],
-        when: ({ confirmAddEmployee }) => {
-          if (confirmAddEmployee) {
-            return true;
-          } else return false;
-        },
-      },
     ])
     .then((anwsers) => {
-      internOne = new Intern(anwsers);
-      console.log(internOne);
-      teamArray.push(internOne);
-      if (anwsers.employee === "engineer") {
-        promptEngineer();
-      } else if (anwsers.employee === "intern") {
-        promptIntern();
-      } else return anwsers;
+      let intern = new Intern(anwsers);
+      return intern;
     })
     .catch((err) => {});
 }
