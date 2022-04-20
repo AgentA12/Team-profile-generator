@@ -1,8 +1,8 @@
 const inquirer = require("inquirer");
+const generateHTML = require("../src/generateHTML.js");
 const Manager = require("../lib/manager.js");
 const Engineer = require("../lib/engineer.js");
 const Intern = require("../lib/intern.js");
-const generateHTML = require("../src/generateHTML.js");
 
 function promptTeamManager() {
   return inquirer

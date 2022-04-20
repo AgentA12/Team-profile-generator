@@ -25,7 +25,7 @@ body {
   justify-content: center;
   align-items: center;
   flex-wrap: wrap;
-  width: 50%;
+  width: 70%;
   margin: 5% auto;
   gap: 2em;
 }
@@ -50,12 +50,18 @@ body {
 
 .info-list ul {
   list-style: none;
-  outline: 1px solid black;
-  word-break:keep-all;
+  outline: 1px solid #dedede;
+  word-break: keep-all;
 }
 
 .info-list ul li {
-  border-top: 1px black solid;
+  border-top: 1px #dedede solid;
   padding: 10px;
-  font-size: .9rem;
+  font-size: 0.9rem;
+}
+
+.info-list ul li:nth-child(1) {
+  border-top: none;
+  padding: 10px;
+  font-size: 0.9rem;
 }
