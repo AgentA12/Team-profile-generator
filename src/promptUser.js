@@ -72,6 +72,7 @@ function promptTeamManager() {
     .catch((error) => {});
 }
 
+//stores users input and loops if users answers yes to add another employee prompt
 function getTeam(managerObject) {
   let teamArray = [];
   let manager = new Manager(managerObject);

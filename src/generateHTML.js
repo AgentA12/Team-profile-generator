@@ -1,5 +1,6 @@
 const fs = require("fs");
 
+//returna the icon of employee
 function getIconAndTitle(employeeTitle) {
   switch (employeeTitle) {
     case "Manager":
@@ -38,6 +39,7 @@ function generateHTML(data) {
 }
 
 function generateCard(ary) {
+  // generates each empolyee div
   let markdownArray = [];
   for (i = 0; i < ary.length; i++) {
     let markdownDiv = `
@@ -64,6 +66,7 @@ function generateCard(ary) {
   return markdownArray;
 }
 
+//returns the title of employee
 function checkTitle(employee) {
   if (employee.title === "Manager") {
     return `OfficeNumber: ${employee.officeNumber}`;
